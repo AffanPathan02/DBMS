@@ -1,11 +1,3 @@
-ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
-Enter password: 
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 8
-Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
-
-Copyright (c) 2000, 2022, Oracle and/or its affiliates.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
@@ -148,5 +140,27 @@ mysql> select anime_list.anime_id,anime_list.anime_name from anime_list inner jo
 +----------+--------------+
 6 rows in set (0.00 sec)
 
-mysql> 
+mysql> create view top_ranked as select anime_name,rating from anime_list;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from top_ranked;
++--------------+--------+
+| anime_name   | rating |
++--------------+--------+
+| Class room   |      8 |
+| AOT          |     10 |
+| demon slayer |      9 |
++--------------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  ALTER VIEW top_ranked as SELECT anime_id,anime_name from anime_list WHERE (rating>8) and (rating<10);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from top_ranked;
++----------+--------------+
+| anime_id | anime_name   |
++----------+--------------+
+|      103 | demon slayer |
++----------+--------------+
+1 row in set (0.00 sec)
 
