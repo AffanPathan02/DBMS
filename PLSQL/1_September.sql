@@ -33,3 +33,5 @@ INSERT INTO student_list values (2,'Swapnil','Computer');
 
 select * from student_list;
 
+
+
