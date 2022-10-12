@@ -1,0 +1,163 @@
+ubuntu@ubuntu-OptiPlex-5000:~$ mongosh
+Current Mongosh Log ID:	63466543255c44ce4d4b8fc8
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
+Using MongoDB:		6.0.1
+Using Mongosh:		1.6.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2022-10-12T11:39:13.385+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2022-10-12T11:39:13.686+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2022-10-12T11:39:13.686+05:30: vm.max_map_count is too low
+------
+
+------
+   Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+   metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+   
+   The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+   and anyone you share the URL with. MongoDB may use this information to make product
+   improvements and to suggest MongoDB products and deployment options to you.
+   
+   To enable free monitoring, run the following command: db.enableFreeMonitoring()
+   To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+------
+
+test> use db1;
+switched to db db1
+db1> show collections;
+assign
+db1> db.assign.find();
+[ { _id: ObjectId("634663e9fcbd40bf4dd328e5"), x: 1 } ]
+db1> db.assign.remove({'x':1})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+db1> db.assign.insert({'e_id':1,'name':'Affan','Dept':'computer'})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("63466642dbe3d46293e412be") }
+}
+db1> db.assign.insert({'e_id':2,'name':'Sweta'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("63466653dbe3d46293e412bf") }
+}
+db1> db.assign.insert({'e_id':3,'name':'Swapnil','Department':'IT'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6346666ddbe3d46293e412c0") }
+}
+db1> db.assign.find()
+[
+  {
+    _id: ObjectId("63466642dbe3d46293e412be"),
+    e_id: 1,
+    name: 'Affan',
+    Dept: 'computer'
+  },
+  { _id: ObjectId("63466653dbe3d46293e412bf"), e_id: 2, name: 'Sweta' },
+  {
+    _id: ObjectId("6346666ddbe3d46293e412c0"),
+    e_id: 3,
+    name: 'Swapnil',
+    Department: 'IT'
+  }
+]
+db1> db.assign.findOne({'e_id':1})
+{
+  _id: ObjectId("63466642dbe3d46293e412be"),
+  e_id: 1,
+  name: 'Affan',
+  Dept: 'computer'
+}
+db1> db.assign.insert({'e_id':4,'name':'Tejas','Department':'ENTC'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634666f2dbe3d46293e412c1") }
+}
+db1> db.assign.find()
+[
+  {
+    _id: ObjectId("63466642dbe3d46293e412be"),
+    e_id: 1,
+    name: 'Affan',
+    Dept: 'computer'
+  },
+  { _id: ObjectId("63466653dbe3d46293e412bf"), e_id: 2, name: 'Sweta' },
+  {
+    _id: ObjectId("6346666ddbe3d46293e412c0"),
+    e_id: 3,
+    name: 'Swapnil',
+    Department: 'IT'
+  },
+  {
+    _id: ObjectId("634666f2dbe3d46293e412c1"),
+    e_id: 4,
+    name: 'Tejas',
+    Department: 'ENTC'
+  }
+]
+db1> db.assign.update({'name':'Tejas'},{$set:{'Department':'Computer'}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db1> db.assign.find()
+[
+  {
+    _id: ObjectId("63466642dbe3d46293e412be"),
+    e_id: 1,
+    name: 'Affan',
+    Dept: 'computer'
+  },
+  { _id: ObjectId("63466653dbe3d46293e412bf"), e_id: 2, name: 'Sweta' },
+  {
+    _id: ObjectId("6346666ddbe3d46293e412c0"),
+    e_id: 3,
+    name: 'Swapnil',
+    Department: 'IT'
+  },
+  {
+    _id: ObjectId("634666f2dbe3d46293e412c1"),
+    e_id: 4,
+    name: 'Tejas',
+    Department: 'Computer'
+  }
+]
+db1> db.assign.insert({'e_id':5,'name':'Sam','Department':'ENTC'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("63466783dbe3d46293e412c2") }
+}
+db1> db.assign.remove({'name':'Sam'})
+{ acknowledged: true, deletedCount: 1 }
+db1> db.assign.find()
+[
+  {
+    _id: ObjectId("63466642dbe3d46293e412be"),
+    e_id: 1,
+    name: 'Affan',
+    Dept: 'computer'
+  },
+  { _id: ObjectId("63466653dbe3d46293e412bf"), e_id: 2, name: 'Sweta' },
+  {
+    _id: ObjectId("6346666ddbe3d46293e412c0"),
+    e_id: 3,
+    name: 'Swapnil',
+    Department: 'IT'
+  },
+  {
+    _id: ObjectId("634666f2dbe3d46293e412c1"),
+    e_id: 4,
+    name: 'Tejas',
+    Department: 'Computer'
+  }
+]
+db1> 
