@@ -1,0 +1,380 @@
+ubuntu@ubuntu-OptiPlex-5000:~$ mongosh
+Current Mongosh Log ID:	634f95c49092a76ec013f038
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
+Using MongoDB:		6.0.1
+Using Mongosh:		1.6.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2022-10-19T11:40:12.236+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2022-10-19T11:40:12.488+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2022-10-19T11:40:12.488+05:30: vm.max_map_count is too low
+------
+
+------
+   Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+   metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+   
+   The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+   and anyone you share the URL with. MongoDB may use this information to make product
+   improvements and to suggest MongoDB products and deployment options to you.
+   
+   To enable free monitoring, run the following command: db.enableFreeMonitoring()
+   To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+------
+
+test> show collections;
+YashGokakkar
+test> show dbs;
+ad        72.00 KiB
+admin     40.00 KiB
+b1       140.00 KiB
+config    72.00 KiB
+cookie    72.00 KiB
+db1      216.00 KiB
+dbs       48.00 KiB
+demo      60.00 KiB
+local     80.00 KiB
+mydb      48.00 KiB
+pratham   72.00 KiB
+test       8.00 KiB
+yash     100.00 KiB
+test> use Assignment
+switched to db Assignment
+Assignment> show collections;
+
+Assignment> db.createCollection('studentData');
+{ ok: 1 }
+Assignment> db.studentdata.insertMany{'roll_no':8,'name':'Samruddhi','Department':'Mechanical'},{'roll_no':18,'name':'Swapnil','Department':'Computer'})
+Uncaught:
+SyntaxError: Missing semicolon. (1:25)
+
+> 1 | db.studentdata.insertMany{'roll_no':8,'name':'Samruddhi','Department':'Mechanical'},{'roll_no':18,'name':'Swapnil','Department':'Computer'})
+    |                          ^
+  2 |
+
+Assignment> db.studentData.insert({'roll_no':8,'name':'Samruddhi','Department':'Mechanical'},{'roll_no':18,'name':'Swapnil','Department':'Computer'})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa037295a707a3dfd50dc") }
+}
+
+Assignment> db.studentdata.insert({'roll_no':8,'name':'Samruddhi','Marks':72},{'roll_no':18,'name':'Swapnil','Marks':90});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa0fd295a707a3dfd50dd") }
+}
+Assignment> db.studentdata.insert({'roll_no':17,'name':'Affan','Marks':88},{'roll_no':10,'name':'Sweta','Marks':94});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa152295a707a3dfd50de") }
+}
+Assignment> db.studentdata.find()
+[
+  {
+    _id: ObjectId("634fa0fd295a707a3dfd50dd"),
+    roll_no: 8,
+    name: 'Samruddhi',
+    Marks: 72
+  },
+  {
+    _id: ObjectId("634fa152295a707a3dfd50de"),
+    roll_no: 17,
+    name: 'Affan',
+    Marks: 88
+  }
+]
+Assignment> db.studentdata.insert({'roll_no':10,'name':'Sweta','Marks':94});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa17e295a707a3dfd50df") }
+}
+Assignment>  db.studentdata.insert({'roll_no':8,'name':'Samruddhi','Marks':72},{'roll_no':18,'name':'Swapnil','Marks':90});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa192295a707a3dfd50e0") }
+}
+Assignment>  db.studentdata.insert({'roll_no':18,'name':'Swapnil','Marks':90});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa19c295a707a3dfd50e1") }
+}
+Assignment> db.studentdata.find()
+[
+  {
+    _id: ObjectId("634fa0fd295a707a3dfd50dd"),
+    roll_no: 8,
+    name: 'Samruddhi',
+    Marks: 72
+  },
+  {
+    _id: ObjectId("634fa152295a707a3dfd50de"),
+    roll_no: 17,
+    name: 'Affan',
+    Marks: 88
+  },
+  {
+    _id: ObjectId("634fa17e295a707a3dfd50df"),
+    roll_no: 10,
+    name: 'Sweta',
+    Marks: 94
+  },
+  {
+    _id: ObjectId("634fa192295a707a3dfd50e0"),
+    roll_no: 8,
+    name: 'Samruddhi',
+    Marks: 72
+  },
+  {
+    _id: ObjectId("634fa19c295a707a3dfd50e1"),
+    roll_no: 18,
+    name: 'Swapnil',
+    Marks: 90
+  }
+]
+Assignment> var map=function(){emit(this.marks)}
+
+Assignment> var reduce=function(marks){return Array.sum(marks)}
+Assignment> db.studentdata.insert({'roll_no':8,'name':'Samruddhi','age':17,'Marks':72});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa220295a707a3dfd50e2") }
+}
+Assignment> db.studentdata.insert({'roll_no':18,'name':'Swapnil','age':20,'Marks':90});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa233295a707a3dfd50e3") }
+}
+Assignment> db.studentdata.insert({'roll_no':12,'name':'Himanshu','age':21,'Marks':88});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa248295a707a3dfd50e4") }
+}
+Assignment> db.studentdata.insert({'roll_no':05,'name':'Kalua','age':20,'Marks':99});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa25b295a707a3dfd50e5") }
+}
+Assignment> var map=function(){emit(this.age,this.marks)}
+
+Assignment> var reduce=function(age,marks){return Array.sum(marks)}
+
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 20, value: NaN },
+  { _id: 21, value: null },
+  { _id: 17, value: null }
+]
+Assignment> db.dropDatabase();
+{ ok: 1, dropped: 'Assignment' }
+Assignment> db.studentdata.find();
+
+Assignment> db.studentdata.insert({'roll_no':8,'name':'Samruddhi','marks':88,'age':17})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa3a7295a707a3dfd50e6") }
+}
+Assignment> db.studentdata.insert({'roll_no':05,'name':'Kalua','marks':99,'age':7})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa3bc295a707a3dfd50e7") }
+}
+Assignment> db.studentdata.insert({'roll_no':18,'name':'Swapnil','marks':94,'age':20})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa3cf295a707a3dfd50e8") }
+}
+Assignment> db.studentdata.insert({'roll_no':12,'name':'Himanshu','marks':92,'age':20})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa3e8295a707a3dfd50e9") }
+}
+Assignment> var map=function(){emit(this.age,this.marks)}
+
+Assignment> var reduce=function(age,marks){return Array.sum(marks)}
+
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 7, value: 99 },
+  { _id: 17, value: 88 },
+  { _id: 20, value: 186 }
+]
+Assignment> db.studentdata.insert({'roll_no':16,'name':'Tejas','marks':80,'age':20})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa417295a707a3dfd50ea") }
+}
+Assignment> db.studentdata.insert({'roll_no':17,'name':'Affan','marks':97,'age':20})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa42e295a707a3dfd50eb") }
+}
+Assignment> db.studentdata.insert({'roll_no':7,'name':'Viraj','marks':75,'age':22})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa446295a707a3dfd50ec") }
+}
+Assignment> var map=function(){emit(this.age,this.marks)}
+
+Assignment> var reduce=function(age,marks){return Array.sum(marks)}
+
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 7, value: 99 },
+  { _id: 17, value: 88 },
+  { _id: 22, value: 75 },
+  { _id: 20, value: 363 }
+]
+Assignment> var map=function(){emit(this.roll_no,this.marks)}
+
+Assignment> var reduce=function(roll_no,marks){return Array.sum(marks)}
+
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 12, value: 92 },
+  { _id: 16, value: 80 },
+  { _id: 17, value: 97 },
+  { _id: 8, value: 88 },
+  { _id: 7, value: 75 },
+  { _id: 18, value: 94 },
+  { _id: 5, value: 99 }
+]
+Assignment> db.studentdata.insert({'roll_no':7,'name':'Viraj','marks':80,'age':22})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa498295a707a3dfd50ed") }
+}
+Assignment> var map=function(){emit(this.roll_no,this.marks)}
+
+Assignment> var reduce=function(roll_no,marks){return Array.sum(marks)}
+
+Assignment> db.source.find();
+[
+  { _id: 12, value: 92 },
+  { _id: 16, value: 80 },
+  { _id: 17, value: 97 },
+  { _id: 8, value: 88 },
+  { _id: 7, value: 75 },
+  { _id: 18, value: 94 },
+  { _id: 5, value: 99 }
+]
+Assignment> db.studentdata.find()
+[
+  {
+    _id: ObjectId("634fa3a7295a707a3dfd50e6"),
+    roll_no: 8,
+    name: 'Samruddhi',
+    marks: 88,
+    age: 17
+  },
+  {
+    _id: ObjectId("634fa3bc295a707a3dfd50e7"),
+    roll_no: 5,
+    name: 'Kalua',
+    marks: 99,
+    age: 7
+  },
+  {
+    _id: ObjectId("634fa3cf295a707a3dfd50e8"),
+    roll_no: 18,
+    name: 'Swapnil',
+    marks: 94,
+    age: 20
+  },
+  {
+    _id: ObjectId("634fa3e8295a707a3dfd50e9"),
+    roll_no: 12,
+    name: 'Himanshu',
+    marks: 92,
+    age: 20
+  },
+  {
+    _id: ObjectId("634fa417295a707a3dfd50ea"),
+    roll_no: 16,
+    name: 'Tejas',
+    marks: 80,
+    age: 20
+  },
+  {
+    _id: ObjectId("634fa42e295a707a3dfd50eb"),
+    roll_no: 17,
+    name: 'Affan',
+    marks: 97,
+    age: 20
+  },
+  {
+    _id: ObjectId("634fa446295a707a3dfd50ec"),
+    roll_no: 7,
+    name: 'Viraj',
+    marks: 75,
+    age: 22
+  },
+  {
+    _id: ObjectId("634fa498295a707a3dfd50ed"),
+    roll_no: 7,
+    name: 'Viraj',
+    marks: 80,
+    age: 22
+  }
+]
+Assignment> var map=function(){emit(this.roll_no,this.marks)}
+
+Assignment> var reduce=function(roll_no,marks){return Array.sum(marks)}
+
+Assignment> db.source.find();
+[
+  { _id: 12, value: 92 },
+  { _id: 16, value: 80 },
+  { _id: 17, value: 97 },
+  { _id: 8, value: 88 },
+  { _id: 7, value: 75 },
+  { _id: 18, value: 94 },
+  { _id: 5, value: 99 }
+]
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 12, value: 92 },
+  { _id: 16, value: 80 },
+  { _id: 5, value: 99 },
+  { _id: 18, value: 94 },
+  { _id: 8, value: 88 },
+  { _id: 7, value: 155 },
+  { _id: 17, value: 97 }
+]
+Assignment> db.studentdata.insert({'roll_no':12,'name':'Himanshu','marks':88,'age':22})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("634fa573295a707a3dfd50ee") }
+}
+Assignment> var map=function(){emit(this.roll_no,this.marks)}
+
+Assignment> var reduce=function(roll_no,marks){return Array.sum(marks)}
+
+Assignment> db.studentdata.mapReduce(map,reduce,{'out':'source'})
+{ result: 'source', ok: 1 }
+Assignment> db.source.find();
+[
+  { _id: 12, value: 180 },
+  { _id: 16, value: 80 },
+  { _id: 18, value: 94 },
+  { _id: 5, value: 99 },
+  { _id: 8, value: 88 },
+  { _id: 7, value: 155 },
+  { _id: 17, value: 97 }
+]
+
+
+
